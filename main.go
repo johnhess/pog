@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+const port = 8080
 const gatewayURL = "https://ohttp-gateway.jthess.com/gateway"
 const respContentType = "message/ohttp-res"
 const reqContentType = "message/ohttp-req"
@@ -68,7 +69,7 @@ func handleProxy(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	fmt.Print("Starting server on :8080\n")
+	fmt.Printf("Starting server on :%d\n", port)
 	http.HandleFunc("/", handleProxy)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), nil))
 }
