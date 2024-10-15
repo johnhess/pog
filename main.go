@@ -33,7 +33,7 @@ func handleProxy(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("Proxying request to gateway: %s\n", gatewayURL)
 	// Validate the request
 	if err := validateRequest(r); err != nil {
-		http.Error(w, "Bad request", http.StatusBadRequest)
+		http.Error(w, fmt.Sprintf("Bad request: %s", err.Error()), http.StatusBadRequest)
 		return
 	}
 	fmt.Print("Request validated\n")
@@ -57,7 +57,7 @@ func handleProxy(w http.ResponseWriter, r *http.Request) {
 
 	// Validate the gateway response
 	if err := validateGatewayResponse(gatewayResponse); err != nil {
-		http.Error(w, "Bad gateway response", http.StatusBadGateway)
+		http.Error(w, fmt.Sprintf("Bad gateway response: %s", err.Error()), http.StatusBadGateway)
 		return
 	}
 	fmt.Print("Response validated\n")
