@@ -58,6 +58,9 @@ func handleProxy(w http.ResponseWriter, r *http.Request) {
 	// Validate the gateway response
 	if err := validateGatewayResponse(gatewayResponse); err != nil {
 		http.Error(w, fmt.Sprintf("Bad gateway response: %s", err.Error()), http.StatusBadGateway)
+		gatewayResponseAsString, _ := io.ReadAll(gatewayResponse.Body)
+		fmt.Printf("Gateway responded in a bad way.  Status: %s.  Message: %s",
+			gatewayResponse.Status, gatewayResponseAsString)
 		return
 	}
 	fmt.Print("Response validated\n")
